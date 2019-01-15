@@ -5,9 +5,16 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AreaTrabalhoComponent } from './area-trabalho/area-trabalho.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { MatToolbarModule } from '@angular/material';
+import { MatToolbarModule,
+         MatButtonModule,
+         MatFormFieldModule,
+         MatInputModule,
+         MatIconModule,
+         } from '@angular/material';
 import { LoginComponent } from './login/login.component';
 import { BarraferramentaComponent } from './barraferramenta/barraferramenta.component';
+import { ConexaoApiService } from './conexao-api.service';
+
 
 @NgModule({
   declarations: [
@@ -22,7 +29,7 @@ import { BarraferramentaComponent } from './barraferramenta/barraferramenta.comp
     DragDropModule,
     MatToolbarModule
   ],
-  providers: [],
+  providers: [ConexaoApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
