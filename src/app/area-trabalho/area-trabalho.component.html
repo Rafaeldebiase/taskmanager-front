@@ -1,6 +1,10 @@
-<div class="container">
-  <h2>To do</h2>
-
+<header>
+  <mat-toolbar class="toolbar">
+    <span><h1>Gerenciador de tarefas</h1></span>
+  </mat-toolbar>
+</header>
+<div class="container todo">
+  <h2>A fazer</h2>
   <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo"
       [cdkDropListConnectedTo]="doneList" class="list" (cdkDropListDropped)="drop($event)">
     <div class="list-item" *ngFor="let item of todo" cdkDrag>{{item}}</div>
@@ -8,7 +12,7 @@
 </div>
 
 <div class="container">
-  <h2>Done</h2>
+  <h2>Concluído</h2>
 
   <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done"
       [cdkDropListConnectedTo]="todoList" class="list" (cdkDropListDropped)="drop($event)">
