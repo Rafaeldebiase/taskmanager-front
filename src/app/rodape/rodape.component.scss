@@ -1,0 +1,17 @@
+.rodape {
+    display: grid;
+    grid-template-rows: auto auto;
+    row-gap: 2px;
+    justify-items: center;
+    background-color: lightgrey;
+}
+
+.info {
+    font-size: 15px;
+    color: black;
+}
+
+.info2 {
+    font-size: 12px;
+    color: black;
+}

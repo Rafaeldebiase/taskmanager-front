@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import {  } from '@angular'
+import { HttpClient } from '@angular/common/http';
 
-import { api } from '../app/app.api';
-
+import { api } from './config/app.api';
 
 
 @Injectable({
@@ -10,5 +9,9 @@ import { api } from '../app/app.api';
 })
 export class ConexaoApiService {
 
-  constructor(private http: ) { }
+  constructor(private http: HttpClient) { }
+
+  private login() {
+      // this.http.post(`${api}/login`)
+  }
 }

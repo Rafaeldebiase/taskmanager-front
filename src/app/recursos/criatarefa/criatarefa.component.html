@@ -1,0 +1,39 @@
+<mat-accordion>
+    <mat-expansion-panel class="contexto">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>add_circle_outline</mat-icon>
+        </mat-panel-title>
+        <mat-panel-description>
+          Adicione novas tarefas.
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <form [formGroup]="formulario">
+        <mat-form-field class="tarefa">
+          <input matInput formControlName="tarefa" placeholder="Tarefa" />
+        </mat-form-field>
+        <mat-form-field class="tarefa">
+          <textarea
+            matInput
+            formControlName="descricao"
+            placeholder="Descrição"
+          ></textarea>
+        </mat-form-field>
+        <mat-action-row>
+          <button
+            mat-raised-button
+            class="butao"
+            color="primary"
+            (click)="adicionaTarefa()"
+            [disabled]="!formulario.valid"
+          >
+            Adicionar
+          </button>
+          <span style="width: 2px"></span>
+          <button mat-raised-button class="butao" (click)="limpaCampos()">
+            Limpar
+          </button>
+        </mat-action-row>
+      </form>
+    </mat-expansion-panel>
+  </mat-accordion>

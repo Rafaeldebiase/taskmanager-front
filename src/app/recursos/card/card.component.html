@@ -1,0 +1,65 @@
+<mat-card class="card" cdkDrag>
+  <form [formGroup]="formulario">
+    <mat-card-header>
+      <div [ngPlural]="flag">
+        <ng-template ngPluralCase="=0">
+          <mat-card-title>{{tarefa}}</mat-card-title>
+        </ng-template>
+        <ng-template ngPluralCase="=1">
+          <mat-card-title>
+              <mat-form-field appearance="legacy">
+                <mat-label>Tarefa</mat-label>
+                <input matInput formControlName="tarefa"/>
+              </mat-form-field>
+          </mat-card-title>
+        </ng-template>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <div [ngPlural]="flag">
+        <ng-template ngPluralCase="=0">
+          <article>{{descricao}}</article>
+        </ng-template>
+        <ng-template ngPluralCase="=1">
+            <mat-form-field appearance="legacy">
+                <mat-label>Descrição</mat-label>
+              <textarea matInput formControlName="descricao"></textarea>
+            </mat-form-field>
+        </ng-template>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <div [ngPlural]="flag">
+        <ng-template ngPluralCase="=0">
+          <button
+            mat-raised-button
+            class="butao"
+            color="primary"
+            (click)="editarTarefa()"
+          >
+            Editar
+          </button>
+        </ng-template>
+        <ng-template ngPluralCase="=1">
+          <button
+            mat-raised-button
+            color="primary"
+            class="butao"
+            [disabled]="!formulario.valid"
+            (click)="salvarTarefa()"
+          >
+            Salvar
+          </button>
+          <button
+            mat-raised-button
+            color="warn"
+            class="butao"
+            (click)="salvarTarefa()"
+          >
+           cancelar
+          </button>
+        </ng-template>
+      </div>
+    </mat-card-actions>
+  </form>
+</mat-card>

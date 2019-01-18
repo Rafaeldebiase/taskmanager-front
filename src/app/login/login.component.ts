@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { AuthService } from '../services/auth.service';
+import { CredenciaisDTO } from '../models/credenciais.dto';
+
 @Component({
   selector: 'tm-login',
   templateUrl: './login.component.html',
@@ -8,11 +11,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  grupoFormulario: FormGroup;
+  public creds: CredenciaisDTO = {
+    email: '',
+    senha: ''
+  };
 
-  hide = true;
+  public hide = true;
 
-  constructor(private fb: FormBuilder) {
+  public grupoFormulario: FormGroup;
+
+  constructor(private fb: FormBuilder, public auth: AuthService) {
   }
 
   ngOnInit() {
@@ -23,7 +31,10 @@ export class LoginComponent implements OnInit {
   }
 
   public login() {
-    
+    this.auth.autenticate(this.creds).subscribe(response => {
+      this.auth.successfulLogin(response.headers.get('Authorization'));
+    });
+    console.log(this.creds);
   }
 
 }

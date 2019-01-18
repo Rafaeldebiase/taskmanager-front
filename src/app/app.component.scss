@@ -1,5 +1,25 @@
+$corPrincipal: lightgrey;
+ 
 .container {
-    background-color: lightgrey;
+    background-color: $corPrincipal;
     height: 100%;
     width: 100%;
+    display: inline-grid;
+    grid-template-rows: 80px auto auto;
+}
+
+header {
+    height: 80px;
+}
+
+section {
+    background-color: $corPrincipal;
+    display: grid;
+    align-self: flex-start;
+}
+
+footer {
+    align-self: end;
+    background-color: $corPrincipal;
+    margin-top: 8px;
 }
