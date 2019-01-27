@@ -1,59 +1,41 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AreaTrabalhoComponent } from './area-trabalho/area-trabalho.component';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-import { MatToolbarModule,
-         MatButtonModule,
-         MatFormFieldModule,
-         MatInputModule,
-         MatIconModule,
-         MatExpansionModule,
-         MatCardModule
-         } from '@angular/material';
-import { LoginComponent } from './login/login.component';
-import { BarraferramentaComponent } from './barraferramenta/barraferramenta.component';
-import { ConexaoApiService } from './conexao-api.service';
-import { RodapeComponent } from './rodape/rodape.component';
-import { RouterModule } from '@angular/router';
+import { JwtModule } from '@auth0/angular-jwt';
+
 import { ROUTES } from './app.router';
 
-import { CriatarefaComponent } from './recursos/criatarefa/criatarefa.component';
-import { CardComponent } from './recursos/card/card.component';
-import { AuthService } from './services/auth.service';
-import { StorageService } from './services/storage.service';
+import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
+import { RecursosModule } from './recursos/recursos.module';
 
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
 
 @NgModule({
   declarations: [
     AppComponent,
-    AreaTrabalhoComponent,
     LoginComponent,
-    BarraferramentaComponent,
-    RodapeComponent,
-    CardComponent,
-    CriatarefaComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    DragDropModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatExpansionModule,
-    MatCardModule,
-    ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot(ROUTES)
+    RecursosModule.forRoots(),
+    RouterModule.forRoot(ROUTES),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: [],
+        blacklistedRoutes: []
+      }
+    })
   ],
-  providers: [ConexaoApiService, AuthService, StorageService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

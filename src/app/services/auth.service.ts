@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { api } from '../config/app.api';
-import { CredenciaisDTO } from '../models/credenciais.dto';
-import { LocalUser } from '../models/localuser';
-import { StorageService } from './storage.service';
+import { ICredenciaisDTO } from '../models/dto/credenciais.dto';
 
+import { StorageService } from './storage.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { ILocalUser } from '../models/dto/localuser.Dto';
 
 @Injectable()
 export class AuthService {
 
-    constructor(public http: HttpClient, public storage: StorageService) {}
+    constructor(public http: HttpClient, public storage: StorageService,
+        public jwtHelper: JwtHelperService) {}
 
-    public autenticate(creds: CredenciaisDTO) {
+    public authenticate(creds: ICredenciaisDTO) {
         return this.http.post(
             `${api}/login`,
             creds,
@@ -21,15 +23,24 @@ export class AuthService {
             });
     }
 
-    successfulLogin(authorizationValue: string) {
+    public successfulLogin(authorizationValue: string) {
         const token = authorizationValue.substring(7);
-        const user: LocalUser = {
-            token: token
+        const user: ILocalUser = {
+            token: token,
+            email: this.jwtHelper.decodeToken(token).sub
         };
         this.storage.setLocalUser(user);
     }
 
-    logout() {
-        this.storage.setLocalUser(null);
+    public logout() {
+        localStorage.removeItem('localUser');
     }
+
+    public isAuthenticated(): boolean {
+        const token = this.storage.getLocalUser().token;
+        return !this.jwtHelper.isTokenExpired(token);
+    }
+
+
+
 }

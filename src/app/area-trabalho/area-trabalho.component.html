@@ -3,6 +3,10 @@
     <tm-criatarefa (tarefa)="insereCard($event)">
     </tm-criatarefa>
   </div>
-  <tm-card *ngFor="let card of cards" [tarefa]="card.tarefa" [descricao]="card.descricao">
+  <tm-card *ngFor="let item of itens; let i:index" 
+  [tarefa]="item.titulo" 
+  [descricao]="item.descricao"
+  [status]="item.status" 
+  [dataPrevistaConclusao]="item.dataPrevisaoConclusao">
   </tm-card>
 </div>

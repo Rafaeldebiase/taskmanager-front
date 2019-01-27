@@ -10,11 +10,11 @@
       <mat-label>
         senha
       </mat-label>
-      <input matInput [(ngModel)]="creds.senha" formControlName="senha" placeholder="Enter your password" [type]="hide ? 'password' : 'text'">
+      <input matInput formControlName="senha" placeholder="Enter your password" [type]="hide ? 'password' : 'text'">
       <mat-icon class="icon" matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
     </mat-form-field>
-    <button class="botao"  type="submit" mat-raised-button color="primary" (click)="login()">Login</button>
+    <button class="botao" type="submit" mat-raised-button color="primary" (click)="login()">Login</button>
   </div>
 </form>
 
-<!-- [routerLink]="['/AreaTrabalho']" -->
+

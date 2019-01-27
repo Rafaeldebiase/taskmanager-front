@@ -1,26 +1,47 @@
-import { Component, OnInit, Output } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ITarefaDto } from '../models/dto/tarefa.dto';
+import { IUsuarioDto } from '../models/dto/usuario.dto';
+import { StorageService } from '../services/storage.service';
+import { TarefaService } from '../services/tarefa.service';
+import { UsuarioService } from '../services/usuario.service';
+import { AreaTrabalhoService } from '../services/area-trabalho.service';
 
-import { IDado } from '../interface/dado';
 
 @Component({
   selector: 'tm-area-trabalho',
   templateUrl: './area-trabalho.component.html',
   styleUrls: ['./area-trabalho.component.scss'],
 })
-export class AreaTrabalhoComponent implements OnInit {
+export class AreaTrabalhoComponent implements OnInit, OnDestroy {
 
-  public cards: IDado[] = [];
+  public itens: ITarefaDto[] = [];
 
-  constructor() {}
+  public xUsuario: IUsuarioDto;
+
+  constructor(private service: AreaTrabalhoService) {}
 
   ngOnInit() {
+    this.service.getUsuarioByEmail();
+    this._populaItens();
   }
 
-  public insereCard(update: IDado) {
-    this.cards.push(update);
-    console.log(this.cards);
+  ngOnDestroy() {
+    this.service.xTarefas.unsubscribe();
   }
+
+  private _populaItens() {
+    this.service.xTarefas.subscribe(itens => {
+      this.itens.push(... itens);
+    });
+  }
+
+  // todo
+  public insereCard(update: ITarefaDto) {
+    this.itens.push(update);
+    console.log(this.itens);
+  }
+
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {

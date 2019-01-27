@@ -1,0 +1,22 @@
+<mat-toolbar class="toolbar">
+  <span><h1>Gerenciador de tarefas</h1></span>
+  <span class="menu"></span>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon aria-label="Crie sua conta">person_add</mat-icon>
+      <label>Crie sua conta</label>
+    </button>
+    <button mat-menu-item>
+      <mat-icon aria-label="sobre">info</mat-icon>
+      <label>Sobre</label>
+    </button>
+    <button mat-menu-item [disabled]="!flag" (click)="logout()">
+      <mat-icon aria-label="Logout">account_box</mat-icon>
+      <label>Logout</label>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+

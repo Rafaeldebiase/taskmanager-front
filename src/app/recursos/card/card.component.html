@@ -3,15 +3,34 @@
     <mat-card-header>
       <div [ngPlural]="flag">
         <ng-template ngPluralCase="=0">
-          <mat-card-title>{{tarefa}}</mat-card-title>
+          <mat-card-title>
+            <span>{{tarefa}}</span>
+          </mat-card-title>
+          <mat-card-subtitle>
+            <mat-form-field>
+              <input matInput [matDatepicker]="dp1" placeholder="Previsão de conclusão"
+              [formControl]="date" disabled>
+              <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+              <mat-datepicker #dp1 disabled="true"></mat-datepicker>
+            </mat-form-field>
+          </mat-card-subtitle>
         </ng-template>
         <ng-template ngPluralCase="=1">
           <mat-card-title>
-              <mat-form-field appearance="legacy">
-                <mat-label>Tarefa</mat-label>
-                <input matInput formControlName="tarefa"/>
-              </mat-form-field>
+            <mat-form-field appearance="legacy">
+              <mat-label>Tarefa</mat-label>
+              <input matInput formControlName="tarefa" />
+            </mat-form-field>
           </mat-card-title>
+            <mat-form-field>
+              <input matInput [matDatepicker]="dp2" placeholder="Previsão de conclusão"
+              [formControl]="date" disabled>
+              <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+              <mat-datepicker #dp2 disabled="false"></mat-datepicker>
+            </mat-form-field>
+          <mat-card-subtitle>
+
+          </mat-card-subtitle>
         </ng-template>
       </div>
     </mat-card-header>
@@ -21,45 +40,35 @@
           <article>{{descricao}}</article>
         </ng-template>
         <ng-template ngPluralCase="=1">
-            <mat-form-field appearance="legacy">
-                <mat-label>Descrição</mat-label>
-              <textarea matInput formControlName="descricao"></textarea>
-            </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Descrição</mat-label>
+            <textarea matInput formControlName="descricao"></textarea>
+          </mat-form-field>
         </ng-template>
       </div>
     </mat-card-content>
     <mat-card-actions>
       <div [ngPlural]="flag">
         <ng-template ngPluralCase="=0">
-          <button
-            mat-raised-button
-            class="butao"
-            color="primary"
-            (click)="editarTarefa()"
-          >
-            Editar
+          <button mat-icon-button color="primary" (click)="editarTarefa()">
+            <mat-icon aria-label="Editar">edit</mat-icon>
           </button>
         </ng-template>
         <ng-template ngPluralCase="=1">
-          <button
-            mat-raised-button
-            color="primary"
-            class="butao"
-            [disabled]="!formulario.valid"
-            (click)="salvarTarefa()"
-          >
-            Salvar
+          <button mat-icon-button color="primary" [disabled]="!formulario.valid" (click)="salvarTarefa()">
+            <mat-icon aria-label="Salvar">save</mat-icon>
           </button>
-          <button
-            mat-raised-button
-            color="warn"
-            class="butao"
-            (click)="salvarTarefa()"
-          >
-           cancelar
+          <button mat-icon-button color="warn" (click)="cancelar()">
+            <mat-icon aria-label="Cancelar">cancel_presentation</mat-icon>
           </button>
         </ng-template>
       </div>
     </mat-card-actions>
   </form>
+  <mat-card-footer class="rodape">
+    <span class="status"> {{status}}</span>
+    <span class="espaco"></span>
+    <mat-checkbox class="chekbox" [(ngModel)]="checked" [labelPosition]="labelPosition" [disabled]="disabled">Concluido
+    </mat-checkbox>
+  </mat-card-footer>
 </mat-card>
