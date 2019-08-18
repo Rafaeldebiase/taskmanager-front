@@ -1,6 +1,8 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDatepicker } from '@angular/material';
+import { ITarefaDto } from 'src/app/models/dto/tarefa.dto';
+import { TarefaService } from 'src/app/services/tarefa.service';
 
 @Component({
   selector: 'tm-card',
@@ -21,7 +23,10 @@ export class CardComponent implements OnInit {
   public status: string;
 
   @Input()
-  public dataPrevistaConclusao: string;
+  public dataPrevisaoConclusao: string;
+
+  @Input()
+  public id: string;
 
   public formulario: FormGroup;
 
@@ -33,41 +38,50 @@ export class CardComponent implements OnInit {
 
   public disabled = false;
 
-  public date: FormControl = new FormControl([Validators.required, Validators.pattern('dd/MM/yyyy')]);
+  public date: FormControl = new FormControl();
 
-  constructor(private formBuilder: FormBuilder) {
-    console.log(this.dataPrevistaConclusao);
+  constructor(private formBuilder: FormBuilder, private service: TarefaService) {
   }
 
   ngOnInit() {
-    this.fomularioEdicao();
-    this.prencheFormulario();
-  }
-
-  public prencheFormulario(): void {
-    this.formulario.get('tarefa').setValue(this.tarefa);
-    this.formulario.get('descricao').setValue(this.tarefa);
-    this.date = new FormControl(new Date(this.dataPrevistaConclusao));
+    this._fomularioEdicao();
+    this._prencheFormulario();
+    this._ehConcluido();
   }
 
   public editarTarefa() {
     this.flag = '1';
+    this.date = new FormControl((new Date(this.dataPrevisaoConclusao)).toISOString());
   }
 
   public salvarTarefa() {
+    const xTarefa: ITarefaDto = {
+      id: this.id,
+      titulo: this.formulario.get('tarefa').value,
+      descricao: this.formulario.get('descricao').value,
+    };
+    const tarefaMontada = this.service.montaTarefa(xTarefa);
     this.flag = '0';
   }
 
   public cancelar() {
-
+    this.flag = '0';
   }
 
-  private fomularioEdicao(): void {
+  private _fomularioEdicao(): void {
     this.formulario = this.formBuilder.group({
       tarefa: [null, [Validators.required]],
-      descricao: [null],
-      data: [{value: null, disabled: true}, Validators.required]
+      descricao: [null]
     });
+  }
+
+  private _prencheFormulario(): void {
+    this.formulario.get('tarefa').setValue(this.tarefa);
+    this.formulario.get('descricao').setValue(this.descricao);
+  }
+
+  private _ehConcluido() {
+    console.log(this.checked);
   }
 
 }

@@ -20,9 +20,10 @@
           ></textarea>
         </mat-form-field>
         <mat-form-field>
-          <input matInput formControlName="dataConclusao" placeholder="Previsão de conclusão"/>
-          <mat-hint>ex: 27/01/2019</mat-hint>
-        </mat-form-field>
+            <input matInput [matDatepicker]="dp2" placeholder="Previsão de conclusão" [formControl]="date">
+            <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+            <mat-datepicker #dp2></mat-datepicker>
+          </mat-form-field>
         <mat-action-row>
           <button
             mat-raised-button

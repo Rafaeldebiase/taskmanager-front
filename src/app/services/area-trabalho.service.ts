@@ -29,6 +29,7 @@ export class AreaTrabalhoService {
     }
     public getTarefasByID(xUsuario: IUsuarioDto) {
         this.tarefaService.getTarefasById(xUsuario).subscribe(response => {
+            console.log(response);
             this.xTarefas.next(response);
         });
     }

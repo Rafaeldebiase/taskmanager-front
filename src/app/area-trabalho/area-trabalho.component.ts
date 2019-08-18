@@ -1,10 +1,6 @@
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ITarefaDto } from '../models/dto/tarefa.dto';
 import { IUsuarioDto } from '../models/dto/usuario.dto';
-import { StorageService } from '../services/storage.service';
-import { TarefaService } from '../services/tarefa.service';
-import { UsuarioService } from '../services/usuario.service';
 import { AreaTrabalhoService } from '../services/area-trabalho.service';
 
 
@@ -31,26 +27,13 @@ export class AreaTrabalhoComponent implements OnInit, OnDestroy {
   }
 
   private _populaItens() {
-    this.service.xTarefas.subscribe(itens => {
-      this.itens.push(... itens);
+    this.service.xTarefas.subscribe(item => {
+      this.itens.push(... item);
     });
   }
 
-  // todo
   public insereCard(update: ITarefaDto) {
     this.itens.push(update);
     console.log(this.itens);
-  }
-
-
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(event.previousContainer.data,
-          event.container.data,
-          event.previousIndex,
-          event.currentIndex);
-    }
   }
 }

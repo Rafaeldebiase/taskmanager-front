@@ -6,17 +6,19 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatToolbarModule,
-         MatButtonModule,
-         MatFormFieldModule,
-         MatMenuModule,
-         MatInputModule,
-         MatIconModule,
-         MatExpansionModule,
-         MatCardModule,
-         MatCheckboxModule,
-         MatDatepickerModule,
-         NativeDateModule,
-         MAT_DATE_FORMATS} from '@angular/material';
+            MatButtonModule,
+            MatFormFieldModule,
+            MatMenuModule,
+            MatInputModule,
+            MatIconModule,
+            MatExpansionModule,
+            MatCardModule,
+            MatCheckboxModule,
+            MatDatepickerModule,
+            NativeDateModule,
+            MAT_DATE_LOCALE,
+            MAT_CHECKBOX_CLICK_ACTION,
+        } from '@angular/material';
 import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
 import { AuthGuard } from '../services/auth.guard';
@@ -29,9 +31,9 @@ import { JwtInterceptor } from '@auth0/angular-jwt';
 import { IronHttpInterceptor } from '../interceptor/ironhttp.interceptor';
 import { RodapeComponent } from './rodape/rodape.component';
 import { UsuarioService } from '../services/usuario.service';
-import { MatMomentDateModule, MomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import { FORMAT_DATA } from '../config/format_data.config';
+import { MatMomentDateModule, MomentDateModule} from '@angular/material-moment-adapter';
 import { AreaTrabalhoService } from '../services/area-trabalho.service';
+
 
 
 
@@ -76,8 +78,12 @@ export class RecursosModule {
                 UsuarioService,
                 AreaTrabalhoService,
                 {
-                    provide: MAT_DATE_FORMATS,
-                    useValue: FORMAT_DATA
+                    provide: MAT_DATE_LOCALE,
+                    useValue: 'pt-BR',
+                },
+                {
+                    provide: MAT_CHECKBOX_CLICK_ACTION,
+                    useValue: 'check'
                 },
                 {
                     provide: HTTP_INTERCEPTORS,

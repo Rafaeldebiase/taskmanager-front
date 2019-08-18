@@ -1,7 +1,7 @@
 export interface ITarefaDto {
-    id?: number;
+    id?: string;
     concluido?: string;
-    dataPrevisaoEntrega?: string;
+    dataPrevisaoConclusao?: string;
     descricao?: string;
     email?: string;
     nome?: string;

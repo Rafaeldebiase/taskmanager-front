@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDatepicker } from '@angular/material';
 import { ITarefaDto } from 'src/app/models/dto/tarefa.dto';
 import { TarefaService } from 'src/app/services/tarefa.service';
@@ -18,14 +18,15 @@ export class CriatarefaComponent implements OnInit {
 
   public formulario: FormGroup;
 
+  public date: FormControl = new FormControl([Validators.required]);
+
   constructor(private formBuilder: FormBuilder,
     private service: TarefaService) { }
 
   ngOnInit() {
     this.formulario = this.formBuilder.group({
       titulo: [null, [Validators.required, Validators.maxLength(100)]],
-      descricao: [null],
-      dataConclusao: [null, [Validators.required]]
+      descricao: [null]
     });
   }
 
@@ -33,18 +34,20 @@ export class CriatarefaComponent implements OnInit {
     const xTarefa: ITarefaDto = {
       titulo: this.formulario.get('titulo').value,
       descricao: this.formulario.get('descricao').value,
-      dataPrevisaoEntrega: this.formulario.get('dataConclusao').value
+      dataPrevisaoConclusao: this.date.value
     };
-    this.service.montaTarefa(xTarefa);
+    const tarefaMontada: ITarefaDto = this.service.montaTarefa(xTarefa);
+    this.service.post(tarefaMontada);
     this.service.tarefaPersistida.subscribe(tarefa => {
       this.tarefa.emit(tarefa);
+      this.limpaCampos();
     });
   }
 
   public limpaCampos() {
-    this.formulario.get('tarefa').setValue(null);
+    this.formulario.get('titulo').setValue(null);
     this.formulario.get('descricao').setValue(null);
-    this.formulario.get('dataConclusao').setValue(null);
+    this.date.setValue(null);
   }
 
 }

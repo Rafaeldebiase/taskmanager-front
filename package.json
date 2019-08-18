@@ -26,6 +26,8 @@
     "@ironcorelabs/ironweb": "^1.2.3",
     "core-js": "^2.5.4",
     "hammerjs": "^2.0.8",
+    "md5": "^2.2.1",
+    "md5-typescript": "^1.0.5",
     "moment": "^2.24.0",
     "node-pre-gyp": "^0.12.0",
     "rxjs": "~6.3.3",

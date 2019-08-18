@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { api } from '../config/app.api';
 import { ITarefaDto } from '../models/dto/tarefa.dto';
 import { IUsuarioDto } from '../models/dto/usuario.dto';
+import { error } from 'util';
 
 @Injectable()
 export class TarefaService {
@@ -19,12 +20,12 @@ export class TarefaService {
     return this.http.get<ITarefaDto[]>(`${api}/tarefas/usuario=${xUsuario.id}`);
   }
 
-  public montaTarefa(xTarefa: ITarefaDto) {
+  public montaTarefa(xTarefa: ITarefaDto): ITarefaDto {
     xTarefa.idUsuario = this.usuario.id.toString();
     xTarefa.email = this.usuario.email;
     xTarefa.nome = this.usuario.nome;
     xTarefa.concluido = 'false';
-    this.post(xTarefa);
+    return xTarefa;
   }
 
   public post(tarefa: ITarefaDto) {
@@ -32,19 +33,20 @@ export class TarefaService {
       console.log('POST request successful ', data);
       this.tarefaPersistida.next(tarefa);
     },
+    // tslint:disable-next-line:no-shadowed-variable
     error => {
       console.error(error);
     });
   }
 
-  public put() {
-    //   return this.http.put(`${api}/tarefas/${id}`, )
-    //   "concluido": "false" ,
-    //  "dataPrevisaoEntrega": "2019-02-22T22:10:20.317Z",
-    // "descricao": "ola",
-    // "email": "rafael@teste.com",
-    // "nome": "rafael",
-    // "titulo": "teste"
+  public put(tarefa: ITarefaDto) {
+    this.http.put<ITarefaDto>(`${api}/tarefas/${tarefa.id}`, tarefa).subscribe(data => {
+      console.log('PUT successful ', data);
+    },
+    // tslint:disable-next-line:no-shadowed-variable
+    error => {
+      console.log(error);
+    });
   }
 
   public delete() {}

@@ -5,6 +5,8 @@ import { AuthService } from '../services/auth.service';
 import { ICredenciaisDTO } from '../models/dto/credenciais.dto';
 import { Router } from '@angular/router';
 
+import { Md5 } from 'md5-typescript';
+
 
 @Component({
   selector: 'tm-login',
@@ -38,8 +40,12 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  private _senhaMd5() {
+   return Md5.init(this.grupoFormulario.get('senha').value);
+  }
+
   public login() {
-    this.creds.senha = this.grupoFormulario.get('senha').value;
+    this.creds.senha = this._senhaMd5();
     this.auth.authenticate(this.creds).subscribe( response => {
       this.auth.successfulLogin(response.headers.get('Authorization'));
       this.router.navigate(['areaTrabalho']);
